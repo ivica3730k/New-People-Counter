@@ -151,12 +151,14 @@
     <h2>TSSB</h2>
     <div class="table-wrapper">
 
-        <form action="/">
+        <form id ="columnarForm">
             <label for="Start"></label>
-            <input type="date" id="start" name="start">
+            <input type="date" id="start" name="start" value="{{start}}">
             <label for="End"></label>
-            <input type="date" id="end" name="end">
-            <input type="submit" value="Filtriraj">
+            <input type="date" id="end" name="end" value="{{end}}">
+            <input type="submit" value="Filtriraj" onclick="submitForm('/')">
+            <input type="submit" value="Export CSV" onclick="submitForm('/csv')">
+
         </form>
         <br>
         {%for date,days in data.items()%}
@@ -168,7 +170,6 @@
                     <th>{{a.hour}}:00</th>
                     {% endfor %}
                     <th>Ukupno</th>
-
                 </tr>
             </thead>
             <tbody>
@@ -180,7 +181,13 @@
             </tbody>
         </table>
         {% endfor %}
-    </div>
+    </div>rm 
+    <script>
+        function submitForm(action) {
+            document.getElementById('columnarForm').action = action;
+            document.getElementById('columnarForm').submit();
+        }
+    </script>
 </body>
 
 </html>
