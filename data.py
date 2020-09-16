@@ -42,7 +42,7 @@ def write_visits(num_data=0):
             total += value
         _data[current_day]["total"] = total
 
-    writer.save_obj(_data, "data.data")
+    save_obj(_data, "data.data")
 
 
 def export_csv(data):
