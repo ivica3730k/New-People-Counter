@@ -151,16 +151,19 @@
     <h2>TSSB</h2>
     <div class="table-wrapper">
 
-        <form id ="columnarForm">
+        <form id="columnarForm">
             <label for="Start"></label>
             <input type="date" id="start" name="start" value="{{start}}">
             <label for="End"></label>
             <input type="date" id="end" name="end" value="{{end}}">
             <input type="submit" value="Filtriraj" onclick="submitForm('/')">
             <input type="submit" value="Export CSV" onclick="submitForm('/csv')">
+            <input type="submit" value="Ocisti" onclick="clearFiltering()">
+
 
         </form>
         <br>
+        {% if data %}
         {%for date,days in data.items()%}
         <table class="fl-table">
             <thead>
@@ -181,11 +184,18 @@
             </tbody>
         </table>
         {% endfor %}
+        {% endif %}
     </div>
     <script>
         function submitForm(action) {
             document.getElementById('columnarForm').action = action;
             document.getElementById('columnarForm').submit();
+        }
+
+        function clearFiltering() {
+            document.getElementById('start').value = ""
+            document.getElementById('end').value = ""
+            document.location.href = "/";
         }
     </script>
 </body>

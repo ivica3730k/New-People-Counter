@@ -13,6 +13,8 @@ def load_obj(name ):
         return {}
 
 _data = load_obj("data.data")
+_visits = 0
+_laser_registrations = 0
 
 
 def write_visits(num_data=0):
@@ -99,7 +101,26 @@ def getAll(start = None, end = None):
                 res[i] = workdata[i]
         return res
     elif end:
-        print("Filter end")
+        print("End")
+        end_date = datetime.datetime.strptime(end, "%Y-%m-%d").date()
+        res = {}
+        workdata = _data
+        for i in workdata:
+            if i <= end_date:
+                res[i] = workdata[i]
+        return res
     else:
         return _data
     
+def laserRegistration():
+    global _laser_registrations
+    global _visits
+    _laser_registrations += 1
+    if _laser_registrations % 2 == 0:
+        _visits += 1
+
+def obtainVisits():
+    global _visits
+    value = _visits
+    _visits = 0
+    return value
