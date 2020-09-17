@@ -2,6 +2,7 @@
 
 <head>
     <title>Tehnicka Skola Slavonski Brod, Brojac Posjeta</title>
+    <meta http-equiv="refresh" content="1">
 </head>
 
 <body>
@@ -150,6 +151,17 @@
 
     <h2>TSSB</h2>
     <div class="table-wrapper">
+
+        {% if not ser_ok  %}
+        <h3>Greska sa vezom na Arduino mikrokontroler</h3>
+        <p>Provjeri sve kabele i sadrzaj config.ini file-a 
+            <br>
+            te nakon toga osvjezi stranicu:
+            <br>
+        </p>
+        <div style="padding-bottom: 30px;"></div>
+        {% endif %}
+
 
         <form id="columnarForm">
             <label for="Start"></label>
