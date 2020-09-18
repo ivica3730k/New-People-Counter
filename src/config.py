@@ -2,10 +2,14 @@ from configparser import ConfigParser
 from os import path
 
 ARDUINO_COM_PORT = "COM99"
-ARDUINO_BAUD_RATE = 115200
+ARDUINO_BAUD_RATE = 9600
 
 
 def read_config_file():
+    """
+
+    :return:
+    """
     global ARDUINO_COM_PORT
     global ARDUINO_BAUD_RATE
     config = ConfigParser()
@@ -15,6 +19,10 @@ def read_config_file():
 
 
 def init_config_file():
+    """
+
+    :return:
+    """
     global ARDUINO_COM_PORT
     global ARDUINO_BAUD_RATE
     config = ConfigParser()
@@ -28,6 +36,12 @@ def init_config_file():
 
 
 def write_config_file(com_port, baud_rate):
+    """
+
+    :param com_port:
+    :param baud_rate:
+    :return:
+    """
     config = ConfigParser()
     config.read('config.ini')
     config.add_section('main')

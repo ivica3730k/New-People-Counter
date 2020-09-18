@@ -11,6 +11,10 @@ _serial_ok = False
 
 
 def writeVisits():
+    """
+
+    :return:
+    """
     try:
         while True:
             visits = data.obtainVisits()
@@ -21,6 +25,10 @@ def writeVisits():
 
 
 def processSerialPort():
+    """
+
+    :return:
+    """
     global _serial_ok
     global _reset_serial
     while True:
@@ -44,6 +52,10 @@ def processSerialPort():
 
 @app.route('/')
 def table():
+    """
+
+    :return:
+    """
     start = request.args.get('start')
     end = request.args.get('end')
     return render_template('table.html', data=data.getAll(start, end), start=start, end=end, ser_ok=_serial_ok)
@@ -51,6 +63,10 @@ def table():
 
 @app.route('/csv')
 def csv():
+    """
+
+    :return:
+    """
     start = request.args.get('start')
     end = request.args.get('end')
     csv = data.export_csv(data.getAll(start, end))
@@ -62,6 +78,10 @@ def csv():
 
 
 def flask():
+    """
+
+    :return:
+    """
     app.run(debug=True, use_reloader=False)
 
 

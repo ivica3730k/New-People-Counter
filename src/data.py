@@ -9,13 +9,27 @@ class Data():
     _lock = False
 
     def __init__(self):
+        """
+
+        """
         self._data = self.load_obj("data.data")
 
     def save_obj(self, obj, name):
+        """
+
+        :param obj:
+        :param name:
+        :return:
+        """
         with open(name, 'wb') as f:
             pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
 
     def load_obj(self, name):
+        """
+
+        :param name:
+        :return:
+        """
         try:
             with open(name, 'rb') as f:
                 return pickle.load(f)
@@ -23,6 +37,11 @@ class Data():
             return {}
 
     def write_visits(self, visits=0):
+        """
+
+        :param visits:
+        :return:
+        """
         if visits == 0:
             return
         current_day = datetime.datetime.now()
@@ -52,6 +71,11 @@ class Data():
         self.save_obj(self._data, "data.data")
 
     def export_csv(self, data):
+        """
+
+        :param data:
+        :return:
+        """
         csv = ""
         days = []
         for i in data:
@@ -86,6 +110,12 @@ class Data():
         return csv
 
     def getAll(self, start=None, end=None):
+        """
+
+        :param start:
+        :param end:
+        :return:
+        """
         if start and end:
             start_date = datetime.datetime.strptime(start, "%Y-%m-%d").date()
             end_date = datetime.datetime.strptime(end, "%Y-%m-%d").date()
@@ -116,11 +146,19 @@ class Data():
             return self._data
 
     def laserRegistration(self):
+        """
+
+        :return:
+        """
         self._lock = True
         self._laser_registrations = self._laser_registrations + 1
         self._lock = False
 
     def obtainVisits(self):
+        """
+
+        :return:
+        """
         while self._lock:
             time.sleep(1)
         value = int(self._laser_registrations / 2)
