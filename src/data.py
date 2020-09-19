@@ -9,26 +9,27 @@ class Data():
     _lock = False
 
     def __init__(self):
-        """
+        self._data = self._load_obj("data.data")
 
+    def _save_obj(self, obj, name):
         """
-        self._data = self.load_obj("data.data")
+        Function saves object to data file.
 
-    def save_obj(self, obj, name):
-        """
+        If the data file is not present it will be created.
 
-        :param obj:
-        :param name:
-        :return:
+        :param obj: Object to be written to the file
+        :param name: File name for the object to be written to
+        :return: None
         """
         with open(name, 'wb') as f:
             pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
 
-    def load_obj(self, name):
+    def _load_obj(self, name):
         """
+        Function is used to obtain the object from the data file.
 
-        :param name:
-        :return:
+        :param name: The name of the file from which to load the object
+        :return: Loaded object
         """
         try:
             with open(name, 'rb') as f:
@@ -38,9 +39,15 @@ class Data():
 
     def write_visits(self, visits=0):
         """
+        Function is used to write visits to the data file.
 
-        :param visits:
-        :return:
+        In order to save the visit data the current
+        time and date is taken, along with the number of visits and
+        based on the previous entry is either updated or added to the data file.
+        The function automatically updates the total number of visits for the current day.
+
+        :param visits: Number of visits to write to the data file
+        :return: None
         """
         if visits == 0:
             return
@@ -68,13 +75,18 @@ class Data():
                 total += value
             self._data[current_day]["total"] = total
 
-        self.save_obj(self._data, "data.data")
+        self._save_obj(self._data, "data.data")
 
     def export_csv(self, data):
         """
+        The function takes the data object and serializes it to CSV standard.
 
-        :param data:
-        :return:
+        The provided data is iterated in order to produce the CSV file
+        which can be opened by Excel for viewing the visit statistics.
+        For hours where there are no visits the zero value is written.
+
+        :param data: Data to be CSV serialized
+        :return: CSV formatted string containing the visit data
         """
         csv = ""
         days = []
@@ -111,10 +123,14 @@ class Data():
 
     def getAll(self, start=None, end=None):
         """
+        Function is used to obtain visit data with the wanted filter parameters.
 
-        :param start:
-        :param end:
-        :return:
+        This function is used to obtain the data from the data object which can
+        later be used to display on the web ui or exported to the CSV file.
+
+        :param start: Start day filter parameter, string in %Y-%m-%d format
+        :param end: End day filter parameter, string in %Y-%m-%d format
+        :return: Data object containing visit information
         """
         if start and end:
             start_date = datetime.datetime.strptime(start, "%Y-%m-%d").date()
@@ -147,8 +163,9 @@ class Data():
 
     def laserRegistration(self):
         """
+        Function is used to register the laser interruption coming from Arduino uController.
 
-        :return:
+        :return: None
         """
         self._lock = True
         self._laser_registrations = self._laser_registrations + 1
@@ -156,8 +173,16 @@ class Data():
 
     def obtainVisits(self):
         """
+        Function is used to calculate the number of visits from the recorded laser registrations.
 
-        :return:
+        This function waits for all laser registrations to be finished before calculating the
+        number of visits.
+        The calculation works by taking the number of laser registrations and dividing it by
+        2, one laser registration for entry and one for exit.
+        After the calculation, the number of laser registrations is set to reminder of dividing the
+        current value by 2, in case that the current amount of laser registrations is odd number.
+
+        :return: Number of visits from the last time the function was called.
         """
         while self._lock:
             time.sleep(1)

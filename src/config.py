@@ -7,8 +7,9 @@ ARDUINO_BAUD_RATE = 9600
 
 def read_config_file():
     """
+    Function is used to load parameters from the config file into the configuration module.
 
-    :return:
+    :return: None
     """
     global ARDUINO_COM_PORT
     global ARDUINO_BAUD_RATE
@@ -20,8 +21,9 @@ def read_config_file():
 
 def init_config_file():
     """
+    Function is used to write the default parameters from configuration module to the config file.
 
-    :return:
+    :return: None
     """
     global ARDUINO_COM_PORT
     global ARDUINO_BAUD_RATE
@@ -37,10 +39,11 @@ def init_config_file():
 
 def write_config_file(com_port, baud_rate):
     """
+    Function is used to write the provided parameters to the config file.
 
-    :param com_port:
-    :param baud_rate:
-    :return:
+    :param com_port: Com port for Arduino uController
+    :param baud_rate: Baud rate for the serial communication.
+    :return: None
     """
     config = ConfigParser()
     config.read('config.ini')
